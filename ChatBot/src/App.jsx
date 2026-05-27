@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 
 import './App.css'
 import { URL } from './constans'
-import Recentsearch from './components/Recentsearch'
+import Recentsearch from './components/RecentSearch'
 import QuestionAnswer from './components/QuestionAnswer'
 
 
