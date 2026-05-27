@@ -1,1 +1,1 @@
-export const URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=AIzaSyBgkYdEvYYMSkzZwRuWUtk9ODU8DXaIXbQ'
+export const URL = '/api/chat'

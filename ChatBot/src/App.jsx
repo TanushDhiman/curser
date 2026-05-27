@@ -44,24 +44,37 @@ function App() {
     }
 
     setLoading(true)
-    let response = await fetch(URL, {
-      method: 'POST',
-      body: JSON.stringify(payload)
-    })
+    try {
+      const response = await fetch(URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      })
 
-    response = await response.json()
-    let datastring = response.candidates[0].content.parts[0].text;
-    datastring = datastring.split("* ")
-    datastring = datastring.map((item) => item.trim())
+      const data = await response.json()
+      if (!response.ok) {
+        throw new Error(data?.error || 'Request failed')
+      }
 
+      let datastring = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'No response generated.'
+      datastring = datastring.split("* ")
+      datastring = datastring.map((item) => item.trim())
 
-
-    setAnswer([...answer, { type: 'q', text: question ? question : selectedHistory }, { type: 'a', text: datastring }])
-    setQuestion('')
-    setTimeout(() => {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }, 500);
-    setLoading(false)
+      setAnswer([...answer, { type: 'q', text: question ? question : selectedHistory }, { type: 'a', text: datastring }])
+      setQuestion('')
+      setTimeout(() => {
+        if (scrollRef.current) {
+          scrollRef.current.scrollTop = scrollRef.current.scrollHeight
+        }
+      }, 500)
+    } catch (error) {
+      setAnswer([...answer, { type: 'q', text: question ? question : selectedHistory }, { type: 'a', text: ['Something went wrong. Please try again.'] }])
+      console.error(error)
+    } finally {
+      setLoading(false)
+    }
 
   }
 
