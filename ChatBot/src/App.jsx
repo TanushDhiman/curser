@@ -1,9 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 
 import './App.css'
-import { URL } from '../.env.constans.js'
+// import { URL } from '../.env.constans.js'
 import Recentsearch from './components/RecentSearch'
 import QuestionAnswer from './components/QuestionAnswer'
+
+const URL =
+  'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=' +
+  import.meta.env.VITE_GEMINI_API_KEY
 
 
 function App() {
